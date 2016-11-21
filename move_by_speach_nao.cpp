@@ -14,14 +14,16 @@ std::string current_posture;
 
 
 int main(int argc, char** argv){
+
     // Ask for instructions. The valid commands are "get up" and "sit"
     rapp_communication.text_to_speech("Hello there! What do you want me to do? I can sit or get up.");
     std::string res = rapp_communication.word_spotting({"sit","get up"});
     //if no word from the dictionary ({"sit","get up"}) was recognized:
-    if (res == ""){
+    while (res == "Empty"){
         rapp_communication.text_to_speech("Excuse me, I dont understand. Could you repeat? Evaliable words are:");
         rapp_communication.text_to_speech("sit");
         rapp_communication.text_to_speech("get up");
+        res = rapp_communication.word_spotting({"sit","get up"});
     }
     // Check which command was dictated by the human
     if (res == "sit"){
@@ -39,20 +41,22 @@ int main(int argc, char** argv){
 
     res = rapp_communication.word_spotting({"arms", "head"});
     //if no word from the dictionary ({"arms", "head"}) was recognized:
-    if (res == ""){
+    while (res == "Empty"){
         rapp_communication.text_to_speech("Excuse me, I dont understand. Could you repeat? Evaliable words are:");
         rapp_communication.text_to_speech("arms");
         rapp_communication.text_to_speech("head");
+        res = rapp_communication.word_spotting({"arms", "head"});
     }
     // Check which command was dictated by the human
     if (res == "arms"){
         rapp_communication.text_to_speech("Do you want me to move the left or right arm?");
         res = rapp_communication.word_spotting({"left","right"});
         //if no word from the dictionary ({"arms", "head"}) was recognized:        
-        if (res == ""){
+        while (res == "Empty"){
             rapp_communication.text_to_speech("Excuse me, I dont understand. Could you repeat? Evaliable words are:");
             rapp_communication.text_to_speech("left");
             rapp_communication.text_to_speech("right");
+            res = rapp_communication.word_spotting({"left","right"});
         }
         // Check which command was dictated by the human
         if (res == "left")
@@ -69,10 +73,11 @@ int main(int argc, char** argv){
         rapp_communication.text_to_speech("Do you want me to turn my head left or right?");
         res = rapp_communication.word_spotting({"left","right"});
         //if no word from the dictionary ({"left","right"}) has  recognized:
-        if (res == ""){
+        while (res == "Empty"){
             rapp_communication.text_to_speech("Excuse me, I dont understand. Could you repeat? Evaliable words are:");
             rapp_communication.text_to_speech("left");
             rapp_communication.text_to_speech("right");
+            res = rapp_communication.word_spotting({"left","right"});
         }
         // The head moves by 0.4 rads left or right with 50% of its maximum speed
         if (res == "left")
